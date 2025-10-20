@@ -31,6 +31,11 @@ public class MapEnvHelper {
 		return active == null ? false : active.equals("prod");
 	}
 
+    public boolean isDocker() {
+        String active = env.getProperty("spring.profiles.active");
+        return active == null ? false : active.equals("docker");
+    }
+
 	/**
 	 * 개발
 	 * @return

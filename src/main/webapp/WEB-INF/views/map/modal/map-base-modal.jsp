@@ -9,11 +9,11 @@
             <div class="modal-body">
                 <div class="d-flex flex-column p-2 gap-2">
                     <div class="default-input-group">
-                        <label>자율명</label>
+                        <label>차량명</label>
                         <input value="무인 차량 #1"/>
                     </div>
                     <div class="default-input-group">
-                        <label>자율번호</label>
+                        <label>차량번호</label>
                         <input value="20 대 4256" />
                     </div>
                     <div class="default-input-group">

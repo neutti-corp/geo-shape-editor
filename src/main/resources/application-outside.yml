@@ -1,4 +1,3 @@
-
 application:
   map:
     ngii:
@@ -7,18 +6,15 @@ application:
       sub:
         url: http://210.117.198.120:8081/o2map/services
       cache:
-        path: ~/tilemap-cache/
+        path: ~/.kma-tilemap-cache/
     geoserver:
       url: http://220.90.239.149:8080/geoserver
 
-
 spring:
-  profiles:
-    active: outside
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://101.101.211.71:5433/project?autoReconnect=true
+    url: jdbc:postgresql://localhost:5433/project?autoReconnect=true
     username: postgres
     password: A!S@d3f4g5
   devtools:
@@ -26,18 +22,3 @@ spring:
       enabled: false
     restart:
       enabled: false
-
-server:
-  port: 9600
-  error:
-    include-stacktrace: always
-    whitelabel:
-      enabled: true
-  tomcat:
-    uri-encoding: UTF-8
-  servlet:
-    context-path: /
-    encoding:
-      charset: UTF-8
-    session:
-      timeout: 0

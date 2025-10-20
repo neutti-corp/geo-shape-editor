@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value="map")
 public class MapController {
 
-    @RequestMapping(value="evt-system.html", method = {RequestMethod.GET})
+    @RequestMapping(value="index.html", method = {RequestMethod.GET})
     public String evts(Model model, HttpServletRequest request) throws Exception {
         model.addAttribute("TYPE1","EVTS");
-        model.addAttribute("SYSTEM_TITLE","외부차량 위치추적 시스템 : 대한민국육군");
-        model.addAttribute("SYSTEM_MAINTITLE","대한민국육군");
-        model.addAttribute("SYSTEM_SUBTITLE","Republic Of Korea Army");
+        model.addAttribute("SYSTEM_TITLE","GIS Total Solution : KGeoSTD");
+        model.addAttribute("SYSTEM_MAINTITLE","KGeoSTD");
+        model.addAttribute("SYSTEM_SUBTITLE","GIS Total Solution");
         return "map/index";
     }
 
@@ -30,14 +30,4 @@ public class MapController {
         model.addAttribute("SYSTEM_SUBTITLE","ROK Marine Corps Education & Training Group");
         return "map/index";
     }
-
-    @RequestMapping(value="etri-map.html", method = {RequestMethod.GET})
-    public String etri(Model model, HttpServletRequest request) throws Exception {
-        model.addAttribute("TYPE1","SGVS");
-        model.addAttribute("SYSTEM_TITLE","ETRI : 재해분석시스템");
-        model.addAttribute("SYSTEM_MAINTITLE","재해분석시스템");
-        model.addAttribute("SYSTEM_SUBTITLE","");
-        return "etri/index";
-    }
-
 }

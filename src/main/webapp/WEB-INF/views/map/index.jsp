@@ -67,8 +67,9 @@
 
         // 차량 추가
         function addCar(id, lat, lon, heading = 0, type) {
+            var p = ol.proj.transform([lon, lat], 'EPSG:4326', 'EPSG:5179')
             const feature = new ol.Feature({
-                geometry: new ol.geom.Point(ol.proj.fromLonLat([lon, lat])),
+                geometry: new ol.geom.Point(p),
                 id: id,
                 type: type,
                 heading: heading

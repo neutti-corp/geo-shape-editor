@@ -60,9 +60,10 @@ public class ProxyController {
         }
         response.setContentType(param.getFormat());
         File file = new File(path);
-        if(envHelper.isProd()){
+        if(envHelper.isDocker()){
             // URL 호출 안함
             if(!file.exists()) {
+                System.out.println("Image Not Exist :: " + path);
                 // EMPTY IMAGE 대체
                 File emptyFile = null;
                 if (param.getFormat().equals("image/jpg")) {
@@ -77,7 +78,7 @@ public class ProxyController {
         }else{;
             if(!file.exists()){
                 // 지도 서버 shutdown... 대응
-                int randomNumber = ThreadLocalRandom.current().nextInt(500, 1000);
+                int randomNumber = ThreadLocalRandom.current().nextInt(100, 500);
                 Thread.sleep(randomNumber);
                 //
                 file.getParentFile().mkdirs();

@@ -9,7 +9,8 @@ N.Map.init = function(elemId, center, callback){
             N.Map.Layer.BaseMapLayer
         ],
         view: new ol.View({
-            center: ol.proj.fromLonLat(center),
+            projection: "EPSG:5179",
+            center: ol.proj.transform(center, 'EPSG:4326', 'EPSG:5179') ,
             zoom: 15
         })
     });

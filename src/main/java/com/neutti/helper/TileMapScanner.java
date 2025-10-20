@@ -26,12 +26,26 @@ import java.util.List;
 
 @Component
 public class TileMapScanner {
-    private static final String[] LAYERS = {"AIRPHOTO","white_map","korean_map"};
+    private static final String[] LAYERS = {"AIRPHOTO","korean_map"};
     /* 전체영역 */
     private static final double[] EXTENT = {-200000.0, -3015.4524155292, 3803015.45241553, 4000000.0};
     private static final double[] ORIGIN = {-200000.0, 4000000.0};
     //private static final double[] VALID_EXTENT = {831840.1591541814, 1446910.847648412, 1233569.9630996522, 2080637.712895636};
-    private static final double[] VALID_EXTENT = {701005.6341562872, 1450022.2611490092, 1392490.4740230169, 2086050.5542832382};
+    //private static final double[] VALID_EXTENT = {701005.6341562872, 1450022.2611490092, 1392490.4740230169, 2086050.5542832382};
+    /**
+     * 해명대교육훈련단
+     */
+    //private static final double[] VALID_EXTENT = {1171261, 1774988, 1174793, 1779555};
+    /**
+     * 육군정비창
+     */
+    //14318864.798968697, 4197673.570669665, 14329833.910867611, 4207570.04278974
+    //1101823.2731097527 //1694206.6643801897 //1111410.0164777935 //1702855.946048429
+    private static final double[] VALID_EXTENT = {1101823, 1694206, 1111410, 1702855};
+    /**
+     * 전투비행단
+     */
+    //private static final double[] VALID_EXTENT = {1122230, 1891404, 1125289, 1895262};
     private static final int TILE_SIZE = 256;
     private static final String[] MATRIX_IDS = {"L05", "L06", "L07", "L08", "L09", "L10", "L11", "L12", "L13", "L14", "L15", "L16", "L17", "L18", "L19"};
     private static final String[] MATRIX_IDS2 = {"5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"};
@@ -48,7 +62,7 @@ public class TileMapScanner {
     private String mapUrl;
     public List<TileVO> scanTilesForZoom(int zoom) {
         List<TileVO> tileList = new ArrayList<>();
-        if (zoom < 5 || zoom > 19) {
+        if (zoom < 5 || zoom >= 19) {
             System.out.println("대상타일없음");
             return tileList;
         }
@@ -121,7 +135,7 @@ public class TileMapScanner {
                     File file = new File(path);
                     //
                     if(!file.exists()){
-                        System.out.println(urlStr);
+                        System.out.println(zoom + " " + tile + " " + layer + ": " + urlStr);
                         file.getParentFile().mkdirs();
                         HttpURLConnection huc = null;
                         try{
@@ -129,7 +143,7 @@ public class TileMapScanner {
                             URL url = new URL(urlStr.replaceAll(" ", "%20"));
                             URLConnection connection = url.openConnection();
                             huc = (HttpURLConnection)connection;
-                            huc.setConnectTimeout(2000);
+                            huc.setConnectTimeout(1000);
                             huc.setRequestMethod("GET");
                             huc.setRequestProperty("Referer", "http://localhost:8080");
                             huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36");
@@ -140,7 +154,7 @@ public class TileMapScanner {
                             if(huc.getResponseCode() == HttpURLConnection.HTTP_OK) {
                                 int contentLength = connection.getContentLength();
                                 if(true){
-                                //if(contentLength > 0){
+                                    //if(contentLength > 0){
                                     OutputStream out = Files.newOutputStream(file.toPath());
                                     IOUtils.copy(huc.getInputStream(), out);
                                     out.close();
@@ -177,6 +191,8 @@ public class TileMapScanner {
                                 throw new RuntimeException(e);
                             }*/
                         }
+                    }else{
+                        System.out.println(zoom + " " + tile + " " + layer + ": EXIST!!!");
                     }
                 }
             }
@@ -196,7 +212,7 @@ public class TileMapScanner {
         app.setAdditionalProfiles("outside");
         ApplicationContext context = app.run(args);
         TileMapScanner scanner = context.getBean(TileMapScanner.class);
-        scanner.execute(1,5);
+        scanner.execute(0,18);
         //
         Date end = new Date();
         System.out.println(">>>>>>> END : " + end);

@@ -6,7 +6,7 @@
             <a class="navbar-brand d-flex" href="#">
                 <c:choose>
                     <c:when test="${TYPE1 eq 'EVTS'}">
-                    <img class="nmap-logo" src="${pageContext.request.contextPath}/static/images/logo/logo01.svg" alt="Logo">
+                    <img class="nmap-logo" src="${pageContext.request.contextPath}/static/images/logo/KGeoSTD_Logo.png" alt="Logo">
                     </c:when>
                     <c:when test="${TYPE1 eq 'SGVS'}">
                     <img class="nmap-logo" src="${pageContext.request.contextPath}/static/images/logo/logo02.webp" alt="Logo">

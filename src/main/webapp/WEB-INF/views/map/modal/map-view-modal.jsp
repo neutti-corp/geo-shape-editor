@@ -9,8 +9,12 @@
             <div class="modal-body">
                 <div class="d-flex flex-column p-2 gap-2">
                     <div class="default-input-group">
+                        <label>차량고유번호</label>
+                        <input name="carUuid" disabled/>
+                    </div>
+                    <div class="default-input-group">
                         <label>차량명</label>
-                        <input name="carId" value="무인 차량 #1" disabled/>
+                        <input name="carId" value="무인 차량"/>
                     </div>
                     <div class="default-input-group">
                         <label>차량번호</label>
@@ -38,16 +42,21 @@
         const modal = document.getElementById('autoViewModal');
         modal.addEventListener('show.bs.modal', event => {
             const param = event.relatedTarget; // 클릭한 버튼
-            jQuery(modal).find("[name='carId']").val("무인 차량 #" + param.id)
+            jQuery(modal).find("[name='carUuid']").val(param.uuid)
             window.___modal_param = param
             console.log(this, event)
         });
     })();
     function fn_remove_car(){
         if(confirm("등록차량을 삭제 하시겠습니까?")){
-            const feature = carSource.getFeatures().find(f => f.get('id') === window.___modal_param.id);
+            const feature = carSource.getFeatures().find(f => f.get('uuid') === window.___modal_param.uuid);
             if (feature) carSource.removeFeature(feature);
+            //
+            $('#autoViewModal').modal('hide');
+            //
+            const users = JSON.parse(localStorage.getItem('cars') || '[]');
+            const filtered = users.filter(u => u.uuid !== window.___modal_param.uuid);
+            localStorage.setItem('cars', JSON.stringify(filtered));
         }
-        $('#autoViewModal').modal('hide');
     }
 </script>

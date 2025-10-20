@@ -6,7 +6,7 @@ application:
       sub:
         url: http://210.117.198.120:8081/o2map/services
       cache:
-        path: ~/service/map-cache/
+        path: /home/service/map-cache/
     geoserver:
       url: http://220.90.239.149:8080/geoserver
 

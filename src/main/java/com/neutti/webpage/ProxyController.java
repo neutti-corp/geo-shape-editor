@@ -101,6 +101,8 @@ public class ProxyController {
                 urlStr += "&TileCol=" + param.getTileCol();
                 urlStr += "&TileRow=" + param.getTileRow();
                 //
+                System.out.println("Image Not Exist :: " + path);
+                //
                 HttpURLConnection huc = null;
                 OutputStream ios = null;
                 try{

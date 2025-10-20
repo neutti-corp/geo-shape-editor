@@ -7,14 +7,14 @@ application:
       sub:
         url: http://210.117.198.120:8081/o2map/services
       cache:
-        path: ~/tilemap-cache/
+        path: ~/.kma-tilemap-cache/
     geoserver:
       url: http://220.90.239.149:8080/geoserver
 
 
 spring:
   profiles:
-    active: outside
+    active: outside1
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver

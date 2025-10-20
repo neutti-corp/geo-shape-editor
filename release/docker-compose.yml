@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  kgeo-map-server:
+    image: kgeo-map-server-image:v2
+    container_name: kgeo-map-server
+    ports:
+      - "10001:8080"
+      - "10000:5432"
+    command: >
+      bash -lc 'JAVA_OPTS="-Dspring.profiles.active=docker" /home/service/tomcat/bin/catalina.sh run'
+    restart: unless-stopped

@@ -48,3 +48,41 @@ N.Map.Helper.openFullScreen = function(){
         elem.msRequestFullscreen();
     }
 }
+N.Map.Helper.generateUUID = function() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+N.Map.Helper.reloadCars = function(){
+    const cars = JSON.parse(localStorage.getItem('cars') || '[]');
+    var html = ""
+    for(var i in cars){
+        var data = cars[i]
+        var p = ol.proj.transform([data.lon, data.lat], 'EPSG:4326', 'EPSG:5179')
+        const feature = new ol.Feature({
+            geometry: new ol.geom.Point(p),
+            uuid: data.uuid,
+            type: data.type,
+            heading: data.heading
+        });
+        window.carSource.addFeature(feature);
+        //
+        html += '<div class="auto-item '+(data.type ? data.type : 'success')+'" onclick="fn_move_by_car(\''+data.uuid+'\')">\n' +
+            '                        <div class="d-flex justify-content-between align-items-center">\n' +
+            '                            <div class="d-flex flex-column">\n' +
+            '                                <span class="item-title">무인 차량 #car'+(+i+1)+'</span>\n' +
+            '                                <span class="item-info">10/30Km</span>\n' +
+            '                            </div>\n' +
+            '                            <div class="d-flex align-items-center gap-1">\n' +
+            '                                <span class="item-state">정상</span>\n' +
+            '                                <a class="d-flex"><img src="/static/images/icon/map-right-reload.svg"/></a>\n' +
+            '                            </div>\n' +
+            '                        </div>\n' +
+            '                    </div>'
+    }
+    var target = jQuery("#carList")
+    target.html(html)
+
+}

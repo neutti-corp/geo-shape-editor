@@ -14,7 +14,18 @@ MapShapeEditor is an intuitive tool designed for creating, editing, and managing
 ```
 
 ```bash
-docker cp ~/.kma-tilemap-cache map-server:/root/service/map-cache
-docker cp /Users/neutti/Dev/Projects/map-shape-editor/target/ROOT.war map-server:/root/service/tomcat/webapps/ROOT.war
-JAVA_OPTS="-Dspring.profiles.active=docker" ./bin/startup.sh
+docker cp ~/.kma-tilemap-cache/* map-server:/home/service/map-cache
+docker cp /Users/neutti/Dev/Projects/map-shape-editor/target/ROOT.war map-server:/home/service/tomcat/webapps/ROOT.war
+docker exec -it kgeo-map-server bash
+/home/service/tomcat/bin/shutdown.sh
+JAVA_OPTS="-Dspring.profiles.active=docker" /home/service/tomcat/bin/startup.sh
+tail -f /home/service/tomcat/logs/catalina.out
+docker commit map-server kgeo-map-server-image:v2
+docker save -o kgeo-map-server-image-v2.tar kgeo-map-server-image:v2
+docker load -i kgeo-map-server-image-v2.tar 
+docker-compose up -d     
+docker exec -it kgeo-map-server bash
+
+
+docker load -i map-server-image.tar       
 ```

@@ -22,3 +22,6 @@ spring:
       enabled: false
     restart:
       enabled: false
+
+server:
+  port: 9601

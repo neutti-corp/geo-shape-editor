@@ -17,23 +17,27 @@
         <c:choose>
         <c:when test="${TYPE1 eq 'EVTS'}">
         N.Map.init("map", [128.682192, 35.280806], function(map){
-            addCar('car1',35.280613, 128.681741, 45);
-            addCar('car2', 35.281927, 128.683125, 15);
-            addCar('car3', 35.282205, 128.675438, 0);
-            addCar('car4', 35.284001, 128.676704, 0);
-            addCar('car5', 35.279893, 128.678205, 30, 'warning');
-            addCar('car6', 35.280138, 128.670631, 20, 'alert');
+            if(localStorage.getItem('cars') === null){
+                addData({lat: 35.280613, lon: 128.681741, heading: 45});
+                addData({lat: 35.280613, lon: 128.681741, heading: 45});
+                addData({lat: 35.281927, lon: 128.683125, heading: 15});
+                addData({lat: 35.282205, lon: 128.675438, heading: 0});
+                addData({lat: 35.284001, lon: 128.676704, heading: 0});
+                addData({lat: 35.279893, lon: 128.678205, heading: 30, type: 'wait'});
+                addData({lat: 35.280138, lon: 128.670631, heading: 20, type: 'error'});
+            }
+            N.Map.Helper.reloadCars()
             map.on('singleclick', function (evt) {
                 const feature = map.forEachFeatureAtPixel(evt.pixel, f => f);
                 if (feature) {
-                    const id = feature.get('id');
+                    const uuid = feature.get('uuid');
                     const modalEl = document.getElementById('autoViewModal');
                     if (!modalEl) return;
                     const modal = bootstrap.Modal.getOrCreateInstance(modalEl, {
                         backdrop: 'static',
                         keyboard: false
                     });
-                    modal.show({id:id});
+                    modal.show({uuid:uuid});
                 }
             });
         })
@@ -66,17 +70,25 @@
         })
 
         // 차량 추가
-        function addCar(id, lat, lon, heading = 0, type) {
-            var p = ol.proj.transform([lon, lat], 'EPSG:4326', 'EPSG:5179')
-            const feature = new ol.Feature({
-                geometry: new ol.geom.Point(p),
-                id: id,
-                type: type,
-                heading: heading
-            });
-            window.carSource.addFeature(feature);
+        function addData(data) {
+            data.uuid = N.Map.Helper.generateUUID()
+            const existing = JSON.parse(localStorage.getItem('cars') || '[]');
+            existing.push(data);
+            localStorage.setItem('cars', JSON.stringify(existing));
         }
 
+        // 데이터 삭제
+        function deleteData() {
+            const key = document.getElementById("key").value;
+            localStorage.removeItem(key);
+            alert(`삭제됨: ${key}`);
+        }
+
+        // 전체 삭제
+        function clearAll() {
+            localStorage.clear();
+            alert("모든 데이터가 삭제되었습니다.");
+        }
     })();
     /*document.addEventListener('DOMContentLoaded', function () {
         const modalEl = document.getElementById('autoRegistModal');

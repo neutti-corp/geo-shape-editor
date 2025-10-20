@@ -13,80 +13,7 @@
                 </button>
             </h2>
             <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body d-flex flex-column gap-2">
-                    <div class="auto-item success" onclick="fn_move_by_car('car1')">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-title">무인 차량 #car1</span>
-                                <span class="item-info">25/30Km</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-1">
-                                <span class="item-state">정상</span>
-                                <a class="d-flex"><img src="${pageContext.request.contextPath}/static/images/icon/map-right-reload.svg"/></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="auto-item success" onclick="fn_move_by_car('car2')">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-title">무인 차량 #car2</span>
-                                <span class="item-info">25/30Km</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-1">
-                                <span class="item-state">정상</span>
-                                <a class="d-flex"><img src="${pageContext.request.contextPath}/static/images/icon/map-right-reload.svg"/></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="auto-item success" onclick="fn_move_by_car('car3')">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-title">무인 차량 #car3</span>
-                                <span class="item-info">25/30Km</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-1">
-                                <span class="item-state">정상</span>
-                                <a class="d-flex"><img src="${pageContext.request.contextPath}/static/images/icon/map-right-reload.svg"/></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="auto-item success" onclick="fn_move_by_car('car4')">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-title">무인 차량 #car4</span>
-                                <span class="item-info">25/30Km</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-1">
-                                <span class="item-state">정상</span>
-                                <a class="d-flex"><img src="${pageContext.request.contextPath}/static/images/icon/map-right-reload.svg"/></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="auto-item wait" onclick="fn_move_by_car('car5')">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-title">무인 차량 #car5</span>
-                                <span class="item-info">32/30Km</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-1">
-                                <span class="item-state">주의</span>
-                                <a class="d-flex"><img src="${pageContext.request.contextPath}/static/images/icon/map-right-reload.svg"/></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="auto-item error" onclick="fn_move_by_car('car6')">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-title">무인 차량 #car6</span>
-                                <span class="item-info">45/30Km</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-1">
-                                <span class="item-state">경고</span>
-                                <a class="d-flex"><img src="${pageContext.request.contextPath}/static/images/icon/map-right-reload.svg"/></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="accordion-body d-flex flex-column gap-2" id="carList"></div>
             </div>
         </div>
             </c:when>
@@ -251,10 +178,10 @@
     </div>--%>
 </div>
 <script>
-    function fn_move_by_car(id){
-        const feature = carSource.getFeatures().find(f => f.get('id') === id);
+    function fn_move_by_car(uuid){
+        const feature = carSource.getFeatures().find(f => f.get('uuid') === uuid);
         if (!feature) {
-            console.warn('해당 ID의 차량을 찾을 수 없습니다:', id);
+            console.warn('해당 ID의 차량을 찾을 수 없습니다:', uuid);
             return;
         }
 
